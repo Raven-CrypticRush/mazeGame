@@ -15,6 +15,9 @@ public class PlayerScript : MonoBehaviour
     private float horizontalInput;
     private Rigidbody rb;
 
+
+
+
     [Header("Shooting")]
     public GameObject projectile;
     public float shootDelay;
@@ -49,7 +52,6 @@ public class PlayerScript : MonoBehaviour
             isOnGround = false;
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-
     }
     private void OnCollisionEnter(Collision collision)
     {
