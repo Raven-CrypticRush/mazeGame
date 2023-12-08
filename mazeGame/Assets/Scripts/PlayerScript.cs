@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
@@ -14,6 +15,7 @@ public class PlayerScript : MonoBehaviour
     private float verticalInput;
     private float horizontalInput;
     private Rigidbody rb;
+    public GameObject cube;
 
 
 
@@ -43,23 +45,15 @@ public class PlayerScript : MonoBehaviour
 
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Rotate(Vector3.up * turnSpeed * horizontalInput * Time.deltaTime);
-
-
-        //Jumping
-
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
-        {
-            isOnGround = false;
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
     }
     private void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            isOnGround = true;
+            Destroy(cube);
 
         }
     }
-}
+
+    }
