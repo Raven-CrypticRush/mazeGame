@@ -48,10 +48,14 @@ public class PlayerScript : MonoBehaviour
             animator.SetInteger("WalkForward", 1);
         }
 
-        if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
         {
             transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
             animator.SetInteger("WalkForward", -1);
+        }
+        else
+        {
+            animator.SetInteger("WalkForward", 0);
         }
 
         //Clockwise and counterclockwise Rotation
@@ -59,10 +63,15 @@ public class PlayerScript : MonoBehaviour
         {
             animator.SetInteger("Turning", 1);
         }
-        if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
         {
             animator.SetInteger("Turning", -1);
         }
+        else
+        {
+            animator.SetInteger("Turning", 0);
+        }
+       
 
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Rotate(Vector3.up * turnSpeed * horizontalInput * Time.deltaTime);
