@@ -15,22 +15,24 @@ public class PlayerScript : MonoBehaviour
     private float verticalInput;
     private float horizontalInput;
     private Rigidbody rb;
-    public GameObject cube;
+    public GameObject player;
+    
+
+    [Header("Animations")]
+    public Animator animator;
+    public AudioSource audioSource;
+    public bool isDead;
+    public int walkForward;
 
 
-
-
-    [Header("Shooting")]
-    public GameObject projectile;
-    public float shootDelay;
-    public GameObject spawnPoint;
-    public bool canShoot = true;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        isDead = false;
         rb = GetComponent<Rigidbody>();
+        verticalInput = Input.GetAxis("Vertical");
     }
 
     // Update is called once per frame
@@ -38,10 +40,29 @@ public class PlayerScript : MonoBehaviour
     {
         //Forward and Backward Movement
 
-        verticalInput = Input.GetAxis("Vertical");
-        transform.Translate(Vector3.forward * moveSpeed * verticalInput * Time.deltaTime);
+
+        
+        if(Input.GetKey(KeyCode.W))
+        {
+            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            animator.SetInteger("WalkForward", 1);
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
+            animator.SetInteger("WalkForward", -1);
+        }
 
         //Clockwise and counterclockwise Rotation
+        if(Input.GetKey(KeyCode.D))
+        {
+            animator.SetInteger("Turning", 1);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            animator.SetInteger("Turning", -1);
+        }
 
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Rotate(Vector3.up * turnSpeed * horizontalInput * Time.deltaTime);
@@ -51,8 +72,12 @@ public class PlayerScript : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(cube);
-
+            isDead = true;
+        
+            if (isDead == true)
+            {
+                animator.SetBool("Died", true);
+            }
         }
     }
 
