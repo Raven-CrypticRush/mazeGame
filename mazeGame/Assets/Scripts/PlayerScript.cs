@@ -86,6 +86,7 @@ public class PlayerScript : MonoBehaviour
             if (isDead == true)
             {
                 animator.SetBool("Died", true);
+
             }
         }
     }
