@@ -22,7 +22,6 @@ public class PlayerScript : MonoBehaviour
     public Animator animator;
     public AudioSource audioSource;
     public bool isDead;
-    public int walkForward;
 
 
 
@@ -76,6 +75,9 @@ public class PlayerScript : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Rotate(Vector3.up * turnSpeed * horizontalInput * Time.deltaTime);
     }
+
+    //GameOver sequence
+
     private void OnCollisionEnter(Collision collision)
     {
 
@@ -91,4 +93,6 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    }
+
+
+}

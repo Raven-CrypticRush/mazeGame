@@ -82,9 +82,4 @@ public class GameManager : MonoBehaviour
         isGameActive = false;
     }
 
-    // Restart game by reloading the scene
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
 }
