@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
 
 
     [Header("GamePlay")]
+    public PlayerScript playerControllerScript;
+
     public GameObject spawnPos1;
     public GameObject spawnPos2;
     public GameObject spawnPos3;
@@ -86,12 +88,27 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score; " + score;
     }
 
-    // Stop game, bring up game over text and restart button
-    public void GameOver()
+    
+    // Restart game by reloading the scene
+    public void RestartGame()
     {
-        gameOverText.gameObject.SetActive(true);
-        restartButton.gameObject.SetActive(true);
-        isGameActive = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    private void Update()
+    {
+        //GameOver
+        if (playerControllerScript.isDead == true)
+        {
+            gameOverText.gameObject.SetActive(true);
+            restartButton.gameObject.SetActive(true);
+            isGameActive = false;
+        }
+        else if (playerControllerScript.isDead == false)
+        {
+            gameOverText.gameObject.SetActive(false);
+            restartButton.gameObject.SetActive(false);
+            isGameActive = true;
+        }
+    }
 }
