@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,11 +18,22 @@ public class GameManager : MonoBehaviour
 
     private int score;
     private float spawnRate = 1.5f;
-    public bool isGameActive;
+    public bool isGameActive = true;
 
     private float spaceBetweenSquares = 2.5f;
     private float minValueX = -3.75f; //  x value of the center of the left-most square
     private float minValueY = -3.75f; //  y value of the center of the bottom-most square
+
+
+    [Header("GamePlay")]
+    public GameObject spawnPos1;
+    public GameObject spawnPos2;
+    public GameObject spawnPos3;
+
+    public GameObject level1Enemy;
+    public GameObject level2Enemy;
+    public GameObject level3Enemy;
+    
 
     // Start the game, remove title screen, reset score, and adjust spawnRate based on difficulty button clicked
     public void StartGame(int difficulty)
