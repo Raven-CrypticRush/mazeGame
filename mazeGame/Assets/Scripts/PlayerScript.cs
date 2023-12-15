@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class PlayerScript : MonoBehaviour
@@ -30,6 +32,9 @@ public class PlayerScript : MonoBehaviour
     public bool isGameActive = true;
     public bool isAbleToMove = true;
     public GameManager gameManager;
+    public bool end1 = false;
+    public bool end2 = false;
+    public bool end3 = false;
     
 
 
@@ -39,24 +44,22 @@ public class PlayerScript : MonoBehaviour
         isDead = false;
         rb = GetComponent<Rigidbody>();
         verticalInput = Input.GetAxis("Vertical");
-        gameManager = GetComponent<GameManager>();
+        gameManager = GameObject.Find("GamManager").GetComponent<GameManager>();
     }
 
         // Update is called once per frame
         void Update()
     {
-        //Forward and Backward Movement
-
-
+        //movement
         if (isAbleToMove == true)
         {
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetButton("forward"))
             {
                 transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
                 animator.SetInteger("WalkForward", 1);
             }
 
-            else if (Input.GetKey(KeyCode.S))
+            else if (Input.GetButton("backward"))
             {
                 transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
                 animator.SetInteger("WalkForward", -1);
@@ -66,12 +69,12 @@ public class PlayerScript : MonoBehaviour
                 animator.SetInteger("WalkForward", 0);
             }
 
-            //Clockwise and counterclockwise Rotation
-            if (Input.GetKey(KeyCode.D))
+        //Clockwise and counterclockwise Rotation
+            if (Input.GetButton("right"))
             {
                 animator.SetInteger("Turning", 1);
             }
-            else if (Input.GetKey(KeyCode.S))
+            else if (Input.GetButton("left"))
             {
                 animator.SetInteger("Turning", -1);
             }
@@ -84,6 +87,12 @@ public class PlayerScript : MonoBehaviour
             horizontalInput = Input.GetAxis("Horizontal");
             transform.Rotate(Vector3.up * turnSpeed * horizontalInput * Time.deltaTime);
         }
+        //restart button
+        if (Input.GetButton("restart"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
     }
    
 
@@ -92,11 +101,25 @@ public class PlayerScript : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-        if(collision.gameObject.CompareTag("End"))
+        if(collision.gameObject.CompareTag("End1"))
         {
-            
+            end1 = true;
+            end2 = false;
+            end3 = false;
         }
-        
+        if (collision.gameObject.CompareTag("End2"))
+        {
+            end2 = true;
+            end1 = false;
+            end3 = false;
+        }
+        if (collision.gameObject.CompareTag("End3"))
+        {
+            end3= true;
+            end1 = false;
+            end2 = false;
+        }
+
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -112,9 +135,4 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    IEnumerator Level2(int levelDelay)
-    {
-        yield return new WaitForSeconds(levelDelay);
-        
-    }
 }

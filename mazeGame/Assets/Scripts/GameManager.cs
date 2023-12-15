@@ -12,13 +12,14 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI gameOverText;
     public GameObject titleScreen;
     public Button restartButton;
+    public GameObject buttons;
 
 
     public List<GameObject> targetPrefabs;
 
     private int score;
     private float spawnRate = 1.5f;
-    public bool isGameActive = true;
+    public bool isGameActive = false;
 
     private float spaceBetweenSquares = 2.5f;
     private float minValueX = -3.75f; //  x value of the center of the left-most square
@@ -32,9 +33,12 @@ public class GameManager : MonoBehaviour
     public GameObject spawnPos2;
     public GameObject spawnPos3;
 
-    public GameObject level1Enemy;
-    public GameObject level2Enemy;
-    public GameObject level3Enemy;
+    public GameObject level1;
+    public GameObject level2;
+    public GameObject level3;
+
+    public bool title;
+    public GameObject titleSprite;
     
 
     // Start the game, remove title screen, reset score, and adjust spawnRate based on difficulty button clicked
@@ -87,13 +91,7 @@ public class GameManager : MonoBehaviour
         score += scoreToAdd;
         scoreText.text = "Score; " + score;
     }
-
     
-    // Restart game by reloading the scene
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
 
     private void Update()
     {
@@ -110,5 +108,28 @@ public class GameManager : MonoBehaviour
             restartButton.gameObject.SetActive(false);
             isGameActive = true;
         }
+
+        //levels
+        if (playerControllerScript.end1 == true)
+        {
+            level1.SetActive(false);
+            level2.SetActive(true);
+            level3.SetActive(false);
+        }
+        if (playerControllerScript.end2 == true && playerControllerScript.end1 == false)
+        {
+            level1.SetActive(false);
+            level2.SetActive(false);
+            level3.SetActive(true);
+        }
+        if (playerControllerScript.end3 == true && playerControllerScript.end2 == false)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
     }
+
+
+
+
 }
